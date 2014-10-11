@@ -1,7 +1,7 @@
 Summary:	Freeware Advanced Audio Decoder 2
 Name:		faad2
 Version:	2.7
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://heanet.dl.sourceforge.net/faac/%{name}-%{version}.tar.gz
@@ -42,7 +42,7 @@ Header files for faad2.
 %patch0 -p1
 %patch1 -p1
 
-sed -i -e 's|dnl AC_PROG_CXX|AC_PROG_CXX|g' configure.in
+%{__sed} -i -e 's|dnl AC_PROG_CXX|AC_PROG_CXX|g' configure.in
 
 %build
 %{__libtoolize}
@@ -60,6 +60,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -80,7 +82,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libfaad.so
-%{_libdir}/libfaad.la
 %{_includedir}/faad.h
 %{_includedir}/neaacdec.h
 
